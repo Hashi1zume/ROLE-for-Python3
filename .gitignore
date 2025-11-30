@@ -123,3 +123,9 @@ temp_*.bmp
 # Temporary files
 temp/
 tmp/
+
+mmpose/
+mmpose_integration/
+CLAUDE.md
+CHANGELOG.md
+

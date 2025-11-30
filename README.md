@@ -1,24 +1,14 @@
-# ROLE - Raindrop on Lens Effect (Python 3.11)
+# ROLE for Python3
+Origina ROLE : https://github.com/ricky40403/ROLE
 
-[![Python Version](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
-A Python 3.11 compatible implementation of realistic raindrop effects on camera lens images. This project simulates water droplets with accurate optical properties including refraction, collision detection, and merging behaviors.
-
-## 🌧️ Features
-
-- **Realistic Water Droplet Simulation**: Generate natural-looking raindrops with proper shape and transparency
-- **Optical Effects**: Implement fisheye distortion and refraction effects through water droplets
-- **Collision Detection**: Automatic detection and merging of overlapping droplets
-- **Configurable Parameters**: Customizable droplet size, count, and visual properties
-- **Custom Label Support**: Use predefined droplet positions and shapes
-- **Python 3.11 Compatible**: Fully migrated from Python 2.7 with modern dependencies
+Raindrop on lens effect
 
 ## 📸 Before and After
 
 | Original Image | With Raindrop Effect |
 |----------------|---------------------|
-| ![Original](datasets/000041029.jpg) | ![With Raindrops](Output_image/000041029.jpg) |
+| ![Original](datasets/000030973.jpg) | ![With Raindrops](Output_image/000030973.jpg) |
 
 ## 🚀 Quick Start
 
@@ -29,19 +19,7 @@ A Python 3.11 compatible implementation of realistic raindrop effects on camera 
 
 ### Installation
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/yourusername/ROLE_python3.git
-   cd ROLE_python3
-   ```
-
-2. **Create virtual environment**
-   ```bash
-   conda create -n role_python3 python=3.11
-   conda activate role_python3
-   ```
-
-3. **Install dependencies**
+*  **Install dependencies**
    ```bash
    pip install -r requirements.txt
    ```
@@ -71,23 +49,6 @@ python example.py
 # Labels saved to: Output_label/
 ```
 
-## 📁 Project Structure
-
-```
-ROLE_python3/
-├── raindrop/                 # Core library
-│   ├── __init__.py
-│   ├── config.py            # Configuration parameters
-│   ├── raindrop.py          # Individual droplet class
-│   └── dropgenerator.py     # Main generation engine
-├── datasets/                # Input images
-├── Output_image/            # Generated images
-├── Output_label/            # Label maps (optional)
-├── docs/                    # Documentation
-├── example.py               # Usage example
-├── requirements.txt         # Dependencies
-└── README.md
-```
 
 ## ⚙️ Configuration
 
@@ -187,157 +148,3 @@ cfg_dynamic.update({
 
 result = generateDrops('image.jpg', cfg_variety)
 ```
-
-## 🔄 Migration from Python 2.7
-
-This project is a Python 3.11 compatible version of the original Python 2.7 ROLE project. Key improvements:
-
-### What's Changed
-
-- **Dependencies Updated**: Modern versions of OpenCV, Pillow, NumPy
-- **pyblur Replacement**: PIL ImageFilter.GaussianBlur for better compatibility
-- **Enhanced Error Handling**: Robust fisheye distortion with fallbacks
-- **Python 3 Syntax**: Modern Python conventions and type hints
-
-### Migration Benefits
-
-- ✅ **Better Performance**: Optimized NumPy and OpenCV operations
-- ✅ **Active Maintenance**: Up-to-date dependencies with security patches
-- ✅ **Cross-platform**: Improved compatibility across operating systems
-- ✅ **Future-proof**: Python 3.11+ support with modern ecosystem
-
-### API Compatibility
-
-The API remains 100% compatible with the original version:
-
-```python
-# This code works identically in both versions
-from raindrop.dropgenerator import generateDrops
-from raindrop.config import cfg
-
-output = generateDrops(image_path, cfg)
-```
-
-## 📚 Algorithm Details
-
-### Droplet Shape Generation
-
-1. **Base Shape**: Combination of circle and ellipse for natural teardrop appearance
-2. **Alpha Blending**: Gaussian blur for smooth edge transitions
-3. **Size Variation**: Random radius within configured bounds
-
-### Optical Effects
-
-1. **Fisheye Distortion**: OpenCV fisheye camera model for refraction simulation
-2. **Background Blur**: Gaussian blur on background regions
-3. **Edge Enhancement**: Brightness adjustment for droplet edges
-
-### Collision System
-
-1. **Detection**: Center-based collision detection with configurable radius
-2. **Merging**: Weighted center calculation for combined droplets
-3. **Multi-pass**: Iterative processing until no collisions remain
-
-## 🐛 Troubleshooting
-
-### Common Issues
-
-**ImportError: No module named 'cv2'**
-```bash
-pip install opencv-python
-```
-
-**Memory issues with large images**
-```python
-# Resize large images before processing
-from PIL import Image
-img = Image.open('large_image.jpg')
-img = img.resize((1024, 768))
-img.save('resized_image.jpg')
-```
-
-**Fisheye distortion errors**
-```python
-# The code includes automatic fallbacks, but you can disable fisheye:
-# Modify raindrop.py line 58-67 to always use the fallback
-```
-
-### Performance Tips
-
-- Use smaller images (< 2MP) for faster processing
-- Reduce droplet count for real-time applications
-- Enable multiprocessing for batch operations
-
-## 🧪 Testing
-
-Run the test suite:
-
-```bash
-# Basic functionality test
-python -c "
-from raindrop.dropgenerator import generateDrops
-from raindrop.config import cfg
-import os
-
-# Test with sample image
-if os.path.exists('datasets/'):
-    files = [f for f in os.listdir('datasets/') if f.lower().endswith(('.jpg', '.png'))]
-    if files:
-        output = generateDrops(f'datasets/{files[0]}', cfg)
-        print('✅ Basic test passed')
-    else:
-        print('❌ No test images found in datasets/')
-else:
-    print('❌ datasets/ directory not found')
-"
-```
-
-## 📊 Performance Benchmarks
-
-| Image Size | Processing Time | Memory Usage |
-|------------|----------------|--------------|
-| 640x480    | ~2.5s         | ~150MB       |
-| 1024x768   | ~4.8s         | ~280MB       |
-| 1920x1080  | ~12.3s        | ~650MB       |
-
-*Benchmarks on Intel i7-8700K, 16GB RAM*
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-### Development Guidelines
-
-- Follow PEP 8 style guide
-- Add docstrings for new functions
-- Include unit tests for new features
-- Update documentation for API changes
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 👨‍💻 Authors
-
-- **Original Author**: Chia-Tse, Chang
-- **Python 3.11 Migration**: [Your Name]
-
-## 🙏 Acknowledgments
-
-- Original ROLE project for the foundational algorithms
-- OpenCV community for computer vision tools
-- PIL/Pillow team for image processing capabilities
-
-## 📞 Support
-
-- 📧 Email: [your.email@example.com]
-- 🐛 Issues: [GitHub Issues](https://github.com/yourusername/ROLE_python3/issues)
-- 💬 Discussions: [GitHub Discussions](https://github.com/yourusername/ROLE_python3/discussions)
-
----
-
-⭐ **Star this repository if you find it useful!** ⭐

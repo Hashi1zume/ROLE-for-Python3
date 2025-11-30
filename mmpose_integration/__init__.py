@@ -1,1 +1,0 @@
-# MMPose integration module for ROLE raindrop augmentation
